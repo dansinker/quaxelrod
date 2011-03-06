@@ -14,6 +14,16 @@ from django.utils import simplejson
 from google.appengine.api import memcache
 
 
+class GoodsPage(webapp.RequestHandler):
+  
+  def Render(self, template_file, template_values = {}):
+     path = os.path.join(os.path.dirname(__file__), 'templates', template_file)
+     self.response.out.write(template.render(path, template_values))
+  
+  def get(self):
+    self.Render("goods.html",)
+
+
 
 class MainPage(webapp.RequestHandler):
   
@@ -22,10 +32,11 @@ class MainPage(webapp.RequestHandler):
      self.response.out.write(template.render(path, template_values))
   
   def get(self):
-    self.Render("index.html",)
+    self.Render("index_ajax.html",)
 
 application = webapp.WSGIApplication([
   ('/', MainPage), 
+  ('/g', GoodsPage), 
   ],debug=False)
 
 def main():
