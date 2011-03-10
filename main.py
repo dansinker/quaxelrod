@@ -21,9 +21,10 @@ class Tweet(search.SearchableModel):
     via= db.StringProperty()
     url = db.LinkProperty()
     tweet = db.StringProperty()
-    reply_to_username= db.StringListProperty()
+    reply_to_username= db.StringProperty()
     reply_to_tweet_id= db.StringProperty()
-    date = db.StringProperty()
+    date_string = db.StringProperty()
+    date = db.DateTimeProperty()
     json_dump= db.TextProperty()
 
     @classmethod
@@ -46,19 +47,16 @@ class LoadPage(webapp.RequestHandler):
     json = self.request.body
     print "---"
     print json
-    attendee = simplejson.loads(json)
-    a = Attendee(
-        name=attendee['name'],
-        bio=attendee['bio'],
-        photo=attendee['photo'],
-        company=attendee['company'],
-        company_url=attendee['company_url'],
-        hometown=attendee['hometown'],
-        links=attendee['links'],
-        registrant_type=attendee['registrant_type'],
-        badge_type=attendee['badge_type'],
-        user_id=attendee['user_id'], 
-        user_url=attendee['user_url'],
+    tweet = simplejson.loads(json)
+    a = Tweet(
+        username=tweet['username'],
+        via=tweet['via'],
+        tweet=tweet['tweet'].replace('\n',''),
+        reply_to_tweet_id=tweet['reply_to_tweet_id'],
+        reply_to_username=tweet['reply_to_username'],
+        tweet_id=tweet['tweet_id'],
+        date_string=tweet['date'],
+        json_dump = json,
         )
     a.save()
     self.response.out.write('asd')
