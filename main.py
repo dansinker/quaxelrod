@@ -33,7 +33,6 @@ class Tweet(search.SearchableModel):
     
 # The web app interface
 class MainPage(webapp.RequestHandler):
-  
   def Render(self, template_file, template_values = {}):
      path = os.path.join(os.path.dirname(__file__), 'templates', template_file)
      self.response.out.write(template.render(path, template_values))
@@ -41,6 +40,13 @@ class MainPage(webapp.RequestHandler):
   def get(self):
     self.Render("index_ajax.html",{})
 
+class TweetsMainPage(webapp.RequestHandler):
+  def Render(self, template_file, template_values = {}):
+     path = os.path.join(os.path.dirname(__file__), 'templates', template_file)
+     self.response.out.write(template.render(path, template_values))
+  
+  def get(self):
+    self.Render("goods.html",{})
 class LoadPage(webapp.RequestHandler):
   
   def post(self):
@@ -64,6 +70,7 @@ class LoadPage(webapp.RequestHandler):
 
 application = webapp.WSGIApplication([
   ('/', MainPage), 
+  ('/g', TweetsMainPage), 
   ('/load', LoadPage), 
   ],debug=True)
 
