@@ -165,3 +165,13 @@ p #intro {
 	font-size: 0.9em;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
+
+#side .profile-side .about {
+margin-top: 20px;
+}
+
+#side .section-links {
+float: none;
+font-size: .8em;
+text-align: left;
+}
